@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>Воспоминания</title>
+</h:head>
+<h:body>
+    <h2>Поездка: #{tripBean.selectedTrip.name}</h2>
+    <p>#{tripBean.selectedTrip.country}, #{tripBean.selectedTrip.city}</p>
+
+    <h3>Добавить воспоминание</h3>
+    <h:form>
+        <h:panelGrid columns="2">
+            <h:outputLabel value="Название:" />
+            <h:inputText value="#{tripBean.newMemory.title}" required="true"/>
+
+            <h:outputLabel value="Описание:" />
+            <h:inputTextarea value="#{tripBean.newMemory.description}" />
+
+            <h:outputLabel value="Широта:" />
+            <h:inputText value="#{tripBean.newMemory.latitude}" />
+
+            <h:outputLabel value="Долгота:" />
+            <h:inputText value="#{tripBean.newMemory.longitude}" />
+
+            <h:outputLabel value="Оценка (1-5):" />
+            <h:inputText value="#{tripBean.newMemory.rating}" />
+
+            <h:outputLabel value="Хэштеги:" />
+            <h:inputText value="#{tripBean.newMemory.hashtags}" />
+        </h:panelGrid>
+        <h:commandButton value="Сохранить" action="#{tripBean.addMemory}" />
+    </h:form>
+
+    <h3>Список воспоминаний</h3>
+    <h:form>
+        <h:dataTable value="#{tripBean.memories}" var="mem" border="1">
+            <h:column>
+                <f:facet name="header">Название</f:facet>
+                #{mem.title}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Описание</f:facet>
+                #{mem.description}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Координаты</f:facet>
+                #{mem.latitude}, #{mem.longitude}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Оценка</f:facet>
+                #{mem.rating}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Теги</f:facet>
+                #{mem.hashtags}
+            </h:column>
+            <h:column>
+                <h:commandButton value="Удалить" action="#{tripBean.deleteMemory(mem)}" />
+            </h:column>
+        </h:dataTable>
+    </h:form>
+
+    <br/>
+    <h:link value="Назад к поездкам" outcome="index" />
+</h:body>
+</html>

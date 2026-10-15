@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>Мои путешествия</title>
+</h:head>
+<h:body>
+    <h2>Мои поездки</h2>
+
+    <!-- Таблица с поездками -->
+    <h:form>
+        <h:dataTable value="#{tripBean.trips}" var="trip" border="1" rendered="#{not empty tripBean.trips}">
+            <h:column>
+                <f:facet name="header">Название</f:facet>
+                #{trip.name}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Страна</f:facet>
+                #{trip.country}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Город</f:facet>
+                #{trip.city}
+            </h:column>
+            <h:column>
+                <!-- Передаем объект trip прямо в метод -->
+                <h:commandButton value="Открыть" action="#{tripBean.viewTrip(trip)}" />
+            </h:column>
+            <h:column>
+                <h:commandButton value="Удалить" action="#{tripBean.deleteTrip(trip)}" />
+            </h:column>
+        </h:dataTable>
+        <h:outputText value="Пока нет ни одной поездки. Добавьте первую!" rendered="#{empty tripBean.trips}" />
+    </h:form>
+
+    <hr/>
+
+    <!-- Форма добавления новой поездки -->
+    <h3>Добавить поездку</h3>
+    <h:form>
+        <h:panelGrid columns="2">
+            <h:outputLabel value="Название:" />
+            <h:inputText value="#{tripBean.newTrip.name}" required="true" />
+
+            <h:outputLabel value="Страна:" />
+            <h:inputText value="#{tripBean.newTrip.country}" />
+
+            <h:outputLabel value="Город:" />
+            <h:inputText value="#{tripBean.newTrip.city}" />
+        </h:panelGrid>
+        <h:commandButton value="Создать поездку" action="#{tripBean.addTrip}" />
+    </h:form>
+</h:body>
+</html>
