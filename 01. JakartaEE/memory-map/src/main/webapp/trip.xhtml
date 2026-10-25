@@ -57,11 +57,52 @@
                 #{mem.hashtags}
             </h:column>
             <h:column>
+                <h:commandButton value="Редактировать"
+                                 action="#{tripBean.editMemory(mem)}" />
+            </h:column>
+            <h:column>
                 <h:commandButton value="Удалить" action="#{tripBean.deleteMemory(mem)}" />
             </h:column>
         </h:dataTable>
     </h:form>
 
+    <hr/>
+
+    <h:panelGroup rendered="#{not empty tripBean.editingMemory}">
+        <h3>Редактировать воспоминание</h3>
+
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Название:" />
+                <h:inputText value="#{tripBean.editingMemory.title}"
+                             required="true" />
+
+                <h:outputLabel value="Описание:" />
+                <h:inputTextarea value="#{tripBean.editingMemory.description}" />
+
+                <h:outputLabel value="Широта:" />
+                <h:inputText value="#{tripBean.editingMemory.latitude}" />
+
+                <h:outputLabel value="Долгота:" />
+                <h:inputText value="#{tripBean.editingMemory.longitude}" />
+
+                <h:outputLabel value="Оценка (1-5):" />
+                <h:inputText value="#{tripBean.editingMemory.rating}">
+                    <f:validateLongRange minimum="1" maximum="5" />
+                </h:inputText>
+
+                <h:outputLabel value="Хэштеги:" />
+                <h:inputText value="#{tripBean.editingMemory.hashtags}" />
+            </h:panelGrid>
+
+            <h:commandButton value="Сохранить изменения"
+                             action="#{tripBean.saveEditedMemory}" />
+
+            <h:commandButton value="Отмена"
+                             action="#{tripBean.cancelEditMemory}"
+                             immediate="true" />
+        </h:form>
+    </h:panelGroup>
     <br/>
     <h:link value="Назад к поездкам" outcome="index" />
 </h:body>
