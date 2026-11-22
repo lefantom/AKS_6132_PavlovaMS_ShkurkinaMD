@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Travel Memories</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header>
+    <h1>Travel Memories</h1>
+    <p>Система управления путешествиями и воспоминаниями</p>
+</header>
+
+<main class="container">
+
+    <h2>Добро пожаловать!</h2>
+    <p>Выберите раздел для работы с данными.</p>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Пользователи</h3>
+            <p>Просмотр и управление пользователями системы.</p>
+            <a href="/users" class="button">Открыть</a>
+        </div>
+
+        <div class="card">
+            <h3>Путешествия</h3>
+            <p>Управление поездками, странами и городами.</p>
+            <a href="/trips" class="button">Открыть</a>
+        </div>
+
+        <div class="card">
+            <h3>Воспоминания</h3>
+            <p>Хранение фотографических заметок, описаний и оценок путешествий.</p>
+            <a href="/memories" class="button">Открыть</a>
+        </div>
+
+    </div>
+
+</main>
+
+</body>
+</html>

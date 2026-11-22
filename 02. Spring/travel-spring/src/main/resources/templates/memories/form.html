@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Воспоминание</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header>
+    <h1>Воспоминание</h1>
+    <p>Добавление и редактирование заметок</p>
+</header>
+
+<main class="container">
+
+    <a href="/memories" class="back-link">← К списку воспоминаний</a>
+
+    <h2>Данные воспоминания</h2>
+
+    <form th:action="@{/memories/save}"
+          th:object="${memory}"
+          method="post">
+
+        <input type="hidden" th:field="*{id}">
+
+        <div class="form-group">
+            <label>Название:</label>
+            <input type="text"
+                   th:field="*{title}"
+                   maxlength="200"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Описание:</label>
+            <textarea th:field="*{description}"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Широта:</label>
+            <input type="number"
+                   step="0.000001"
+                   th:field="*{latitude}">
+        </div>
+
+        <div class="form-group">
+            <label>Долгота:</label>
+            <input type="number"
+                   step="0.000001"
+                   th:field="*{longitude}">
+        </div>
+
+        <div class="form-group">
+            <label>Рейтинг:</label>
+            <input type="number"
+                   th:field="*{rating}">
+        </div>
+
+        <div class="form-group">
+            <label>Хештеги:</label>
+            <input type="text"
+                   th:field="*{hashtags}"
+                   maxlength="255">
+        </div>
+
+        <div class="form-group">
+            <label>Путешествие:</label>
+            <select name="tripId" required>
+                <option value="" disabled
+                        th:selected="${memory.trip == null}">
+                    Выберите путешествие
+                </option>
+
+                <option th:each="trip : ${trips}"
+                        th:value="${trip.id}"
+                        th:text="${trip.name}"
+                        th:selected="${memory.trip != null and memory.trip.id == trip.id}">
+                </option>
+            </select>
+        </div>
+
+        <button type="submit" class="button">Сохранить</button>
+        <a href="/memories" class="button button-secondary">Отмена</a>
+
+    </form>
+
+</main>
+</body>
+</html>

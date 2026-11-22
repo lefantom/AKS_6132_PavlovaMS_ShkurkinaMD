@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Пользователь</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header>
+    <h1>Пользователь</h1>
+    <p>Добавление и редактирование данных</p>
+</header>
+
+<main class="container">
+
+    <a href="/users" class="back-link">← К списку пользователей</a>
+
+    <h2>Данные пользователя</h2>
+
+    <form th:action="@{/users/save}"
+          th:object="${user}"
+          method="post">
+
+        <input type="hidden" th:field="*{id}">
+
+        <div class="form-group">
+            <label>Имя пользователя:</label>
+            <input type="text"
+                   th:field="*{username}"
+                   maxlength="100"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Email:</label>
+            <input type="email"
+                   th:field="*{email}"
+                   maxlength="150"
+                   required>
+        </div>
+
+        <button type="submit" class="button">Сохранить</button>
+        <a href="/users" class="button button-secondary">Отмена</a>
+
+    </form>
+
+</main>
+</body>
+</html>

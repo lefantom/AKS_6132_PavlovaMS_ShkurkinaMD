@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Воспоминания</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header>
+    <h1>Воспоминания</h1>
+    <p>Заметки и впечатления о путешествиях</p>
+</header>
+
+<main class="container">
+
+    <a href="/" class="back-link">← На главную</a>
+
+    <h2>Список воспоминаний</h2>
+
+    <a href="/memories/new" class="button">Добавить воспоминание</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Описание</th>
+            <th>Широта</th>
+            <th>Долгота</th>
+            <th>Рейтинг</th>
+            <th>Хештеги</th>
+            <th>Путешествие</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="memory : ${memories}">
+            <td th:text="${memory.id}"></td>
+            <td th:text="${memory.title}"></td>
+            <td th:text="${memory.description}"></td>
+            <td th:text="${memory.latitude}"></td>
+            <td th:text="${memory.longitude}"></td>
+            <td th:text="${memory.rating}"></td>
+            <td th:text="${memory.hashtags}"></td>
+            <td th:text="${memory.trip != null ? memory.trip.name : 'Не указано'}"></td>
+            <td>
+                <div class="actions">
+                    <a th:href="@{/memories/{id}/edit(id=${memory.id})}"
+                       class="button">Изменить</a>
+
+                    <form th:action="@{/memories/{id}/delete(id=${memory.id})}"
+                          method="post">
+                        <button type="submit"
+                                class="button button-danger">
+                            Удалить
+                        </button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(memories)}">
+            <td colspan="9">Воспоминаний пока нет.</td>
+        </tr>
+        </tbody>
+    </table>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Путешествия</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header>
+    <h1>Путешествия</h1>
+    <p>Управление туристическими поездками</p>
+</header>
+
+<main class="container">
+
+    <a href="/" class="back-link">← На главную</a>
+
+    <h2>Список путешествий</h2>
+
+    <a href="/trips/new" class="button">Добавить путешествие</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Страна</th>
+            <th>Город</th>
+            <th>Пользователь</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="trip : ${trips}">
+            <td th:text="${trip.id}"></td>
+            <td th:text="${trip.name}"></td>
+            <td th:text="${trip.country}"></td>
+            <td th:text="${trip.city}"></td>
+            <td th:text="${trip.user != null ? trip.user.username : 'Не указан'}"></td>
+            <td>
+                <div class="actions">
+                    <a th:href="@{/trips/{id}/edit(id=${trip.id})}"
+                       class="button">Изменить</a>
+
+                    <form th:action="@{/trips/{id}/delete(id=${trip.id})}"
+                          method="post">
+                        <button type="submit"
+                                class="button button-danger">
+                            Удалить
+                        </button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(trips)}">
+            <td colspan="6">Путешествий пока нет.</td>
+        </tr>
+        </tbody>
+    </table>
+
+</main>
+</body>
+</html>
