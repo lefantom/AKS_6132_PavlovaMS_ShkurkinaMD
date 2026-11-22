@@ -53,4 +53,21 @@ public class TravelService {
         Memory memory = em.find(Memory.class, id);
         if (memory != null) em.remove(memory);
     }
+
+    public void updateTrip(Trip trip) {
+        em.merge(trip);
+    }
+
+    public void updateMemory(Memory memory) {
+        Memory existing = em.find(Memory.class, memory.getId());
+
+        if (existing != null) {
+            existing.setTitle(memory.getTitle());
+            existing.setDescription(memory.getDescription());
+            existing.setLatitude(memory.getLatitude());
+            existing.setLongitude(memory.getLongitude());
+            existing.setRating(memory.getRating());
+            existing.setHashtags(memory.getHashtags());
+        }
+    }
 }

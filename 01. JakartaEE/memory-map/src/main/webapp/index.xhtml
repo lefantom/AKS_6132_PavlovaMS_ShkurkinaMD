@@ -4,6 +4,7 @@
       xmlns:f="jakarta.faces.core">
 <h:head>
     <title>Мои путешествия</title>
+    <h:outputStylesheet library="css" name="style.css"/>
 </h:head>
 <h:body>
     <h2>Мои поездки</h2>
@@ -26,6 +27,10 @@
             <h:column>
                 <!-- Передаем объект trip прямо в метод -->
                 <h:commandButton value="Открыть" action="#{tripBean.viewTrip(trip)}" />
+            </h:column>
+            <h:column>
+                <h:commandButton value="Редактировать"
+                                 action="#{tripBean.editTrip(trip)}" />
             </h:column>
             <h:column>
                 <h:commandButton value="Удалить" action="#{tripBean.deleteTrip(trip)}" />
@@ -51,5 +56,31 @@
         </h:panelGrid>
         <h:commandButton value="Создать поездку" action="#{tripBean.addTrip}" />
     </h:form>
+    <hr/>
+
+    <h:panelGroup rendered="#{not empty tripBean.editingTrip}">
+        <h3>Редактировать поездку</h3>
+
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Название:" />
+                <h:inputText value="#{tripBean.editingTrip.name}"
+                             required="true" />
+
+                <h:outputLabel value="Страна:" />
+                <h:inputText value="#{tripBean.editingTrip.country}" />
+
+                <h:outputLabel value="Город:" />
+                <h:inputText value="#{tripBean.editingTrip.city}" />
+            </h:panelGrid>
+
+            <h:commandButton value="Сохранить изменения"
+                             action="#{tripBean.saveEditedTrip}" />
+
+            <h:commandButton value="Отмена"
+                             action="#{tripBean.cancelEditTrip}"
+                             immediate="true" />
+        </h:form>
+    </h:panelGroup>
 </h:body>
 </html>

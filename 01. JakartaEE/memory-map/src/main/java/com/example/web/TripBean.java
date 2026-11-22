@@ -21,6 +21,8 @@ public class TripBean implements Serializable {
     private Trip selectedTrip;
     private Memory newMemory = new Memory();
     private Trip newTrip = new Trip();
+    private Trip editingTrip;
+    private Memory editingMemory;
 
     // ID пользователя (Марии) из нашей тестовой базы
     private Long currentUserId = 1L;
@@ -48,6 +50,22 @@ public class TripBean implements Serializable {
         travelService.deleteTrip(trip.getId());
     }
 
+    public void editTrip(Trip trip) {
+        editingTrip = travelService.getTripById(trip.getId());
+    }
+
+    public void saveEditedTrip() {
+        if (editingTrip != null) {
+            travelService.updateTrip(editingTrip);
+            editingTrip = null;
+        }
+    }
+
+    public void cancelEditTrip() {
+        editingTrip = null;
+    }
+
+
     // ===== Воспоминания =====
 
     public List<Memory> getMemories() {
@@ -67,6 +85,28 @@ public class TripBean implements Serializable {
         travelService.deleteMemory(memory.getId());
     }
 
+    public void editMemory(Memory memory) {
+        editingMemory = new Memory();
+
+        editingMemory.setId(memory.getId());
+        editingMemory.setTitle(memory.getTitle());
+        editingMemory.setDescription(memory.getDescription());
+        editingMemory.setLatitude(memory.getLatitude());
+        editingMemory.setLongitude(memory.getLongitude());
+        editingMemory.setRating(memory.getRating());
+        editingMemory.setHashtags(memory.getHashtags());
+    }
+
+    public void saveEditedMemory() {
+        if (editingMemory != null) {
+            travelService.updateMemory(editingMemory);
+            editingMemory = null;
+        }
+    }
+
+    public void cancelEditMemory() {
+        editingMemory = null;
+    }
     // ===== Геттеры и сеттеры =====
 
     public Long getSelectedTripId() { return selectedTripId; }
@@ -80,4 +120,19 @@ public class TripBean implements Serializable {
 
     public Trip getNewTrip() { return newTrip; }
     public void setNewTrip(Trip newTrip) { this.newTrip = newTrip; }
+
+    public Trip getEditingTrip() {
+        return editingTrip;
+    }
+
+    public void setEditingTrip(Trip editingTrip) {
+        this.editingTrip = editingTrip;
+    }
+    public Memory getEditingMemory() {
+        return editingMemory;
+    }
+
+    public void setEditingMemory(Memory editingMemory) {
+        this.editingMemory = editingMemory;
+    }
 }
